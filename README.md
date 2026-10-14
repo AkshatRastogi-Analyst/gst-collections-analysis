@@ -36,3 +36,6 @@ How much GST did India collect in a full year, how did each month compare with t
 
 ## Limits
 Only total GST is used, not state-wise or product-wise numbers. Official numbers are provisional and may be revised.
+
+## Live Site Link
+Live Site - https://akshatrastogi-analyst.github.io/gst-collections-analysis/
