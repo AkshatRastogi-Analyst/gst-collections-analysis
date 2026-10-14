@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GST Collections Analysis FY 2025-26 | Akshat Rastogi</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+ :root{--bg:#060a13;--text:#f1f4ff;--muted:#8f9bc4;--saf:#ff9933;--grn:#22c55e;--blu:#4aa3ff;--red:#ef4444;
+   --glass:rgba(255,255,255,.045);--edge:rgba(255,255,255,.11)}
+ *{box-sizing:border-box}
+ html{scroll-behavior:smooth}
+ body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden}
+ a{color:var(--blu)}
+ .wrap{max-width:1140px;margin:0 auto;padding:0 20px;position:relative;z-index:2}
+ .aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+ .blob{position:absolute;border-radius:50%;filter:blur(110px);opacity:.38;animation:drift 22s ease-in-out infinite alternate}
+ .b1{width:520px;height:520px;background:#ff9933;top:-120px;left:-100px}
+ .b2{width:560px;height:560px;background:#22c55e;bottom:-180px;right:-120px;animation-delay:-8s;opacity:.26}
+ .b3{width:480px;height:480px;background:#4aa3ff;top:35%;left:45%;animation-delay:-14s;opacity:.2}
+ @keyframes drift{to{transform:translate(90px,60px) scale(1.15)}}
+ .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+   background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+   background-size:56px 56px;-webkit-mask-image:radial-gradient(circle at 50% 30%,#000 20%,transparent 75%);mask-image:radial-gradient(circle at 50% 30%,#000 20%,transparent 75%)}
+ .glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:1;opacity:0;transition:opacity .3s;
+   background:radial-gradient(circle,rgba(255,153,51,.16),transparent 65%);transform:translate(-50%,-50%)}
+ #bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--saf),#fff,var(--grn));z-index:60}
+ nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:4px;padding:6px;max-width:94vw;overflow-x:auto;
+   background:rgba(12,18,34,.65);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--edge);border-radius:40px}
+ nav a{color:var(--muted);text-decoration:none;font-size:13px;padding:8px 14px;border-radius:30px;white-space:nowrap;transition:.25s}
+ nav a:hover{color:#fff}
+ nav a.on{background:linear-gradient(90deg,rgba(255,153,51,.9),rgba(34,197,94,.9));color:#0a0f1c;font-weight:700}
+ .glass{background:var(--glass);border:1px solid var(--edge);border-radius:24px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+   box-shadow:0 20px 60px rgba(0,0,0,.35);transition:transform .25s ease,border-color .25s}
+ .glass:hover{border-color:rgba(255,153,51,.45)}
+ .hero{min-height:100vh;display:flex;align-items:center;padding:110px 0 60px;position:relative}
+ .hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+ .pill{display:inline-flex;gap:8px;align-items:center;padding:7px 14px;border:1px solid var(--edge);border-radius:30px;font-size:13px;color:var(--muted);background:var(--glass);margin-bottom:20px}
+ .dot{width:8px;height:8px;border-radius:50%;background:var(--grn);box-shadow:0 0 0 0 rgba(34,197,94,.7);animation:ping 1.8s infinite}
+ @keyframes ping{70%{box-shadow:0 0 0 9px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+ h1{font-size:clamp(38px,6.6vw,78px);line-height:1.03;margin:0 0 18px;letter-spacing:-2px}
+ h1 span{background:linear-gradient(90deg,var(--saf),#fff 50%,var(--grn));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
+ @keyframes sheen{to{background-position:200% center}}
+ .sub{color:var(--muted);font-size:clamp(16px,2vw,19px);max-width:580px;margin:0 0 26px}
+ .btn{display:inline-block;padding:13px 24px;border-radius:40px;text-decoration:none;font-weight:700;margin:0 10px 10px 0;transition:transform .2s,box-shadow .2s}
+ .btn.p{background:linear-gradient(90deg,var(--saf),var(--grn));color:#0a0f1c}
+ .btn.p:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,153,51,.35)}
+ .btn.g{border:1px solid var(--edge);color:var(--text);background:var(--glass)}
+ .btn.g:hover{transform:translateY(-3px);border-color:var(--saf)}
+ .hero-card{padding:26px}
+ .hero-card small{color:var(--muted)}
+ .big{font-size:clamp(38px,5.6vw,58px);font-weight:800;letter-spacing:-1px;background:linear-gradient(90deg,var(--saf),#ffd9a8);-webkit-background-clip:text;background-clip:text;color:transparent}
+ .chip{display:inline-block;padding:4px 12px;border-radius:30px;background:rgba(34,197,94,.15);color:var(--grn);font-weight:700;font-size:14px}
+ .bars{display:flex;align-items:flex-end;gap:6px;height:110px;margin-top:20px}
+ .bars i{flex:1;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,var(--saf),rgba(255,153,51,.15));height:0;animation:grow 1.4s cubic-bezier(.2,.9,.2,1) forwards}
+ @keyframes grow{to{height:var(--h)}}
+ .scrollcue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:12px;letter-spacing:2px;animation:bob 1.8s ease-in-out infinite}
+ @keyframes bob{50%{transform:translate(-50%,8px)}}
+ section{padding:80px 0;position:relative}
+ .eyebrow{color:var(--saf);font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+ h2{font-size:clamp(28px,4.5vw,44px);margin:0 0 10px;letter-spacing:-1px}
+ .lead{color:var(--muted);margin:0 0 34px;max-width:720px}
+ .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+ .reveal.show{opacity:1;transform:none}
+ .bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+ .tile{padding:24px;position:relative;overflow:hidden}
+ .tile small{color:var(--muted);display:block}
+ .tile b.n{display:block;font-size:clamp(28px,3.6vw,40px);letter-spacing:-1px;margin:6px 0}
+ .t-main{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column;justify-content:space-between}
+ .t-main b.n{font-size:clamp(40px,5.4vw,64px);background:linear-gradient(90deg,var(--saf),#ffe2bd);-webkit-background-clip:text;background-clip:text;color:transparent}
+ .up{color:var(--grn)} .saf{color:var(--saf)} .blu{color:var(--blu)} .dn{color:var(--red)}
+ .ring{width:130px;height:130px;margin:8px auto 4px;display:block}
+ .ring circle{fill:none;stroke-width:11;stroke-linecap:round}
+ .ring .bg{stroke:rgba(255,255,255,.08)}
+ .ring .fg{stroke:url(#rg);stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1.8s cubic-bezier(.2,.9,.2,1);transform:rotate(-90deg);transform-origin:50% 50%}
+ .ring text{fill:#fff;font-size:24px;font-weight:800;text-anchor:middle;dominant-baseline:middle}
+ .tile.show .ring .fg{stroke-dashoffset:var(--off)}
+ .mini{display:flex;gap:5px;align-items:flex-end;height:64px;margin-top:10px}
+ .mini i{flex:1;background:linear-gradient(180deg,var(--saf),rgba(255,153,51,.1));border-radius:5px;height:0;transition:height 1.2s ease}
+ .t-main.show .mini i{height:var(--h)}
+ .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:18px}
+ .box{padding:22px}
+ .box h3{margin:0 0 14px;font-size:15px;font-weight:600;color:var(--muted)}
+ .box canvas{max-height:330px}
+ /* heat strip */
+ .heat{display:grid;grid-template-columns:repeat(12,1fr);gap:8px}
+ .cell{padding:16px 6px;border-radius:16px;text-align:center;border:1px solid var(--edge);transition:transform .25s}
+ .cell:hover{transform:translateY(-6px) scale(1.04)}
+ .cell b{display:block;font-size:19px;letter-spacing:-.5px}
+ .cell small{display:block;color:rgba(255,255,255,.75);font-size:12px}
+ .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;color:var(--muted);font-size:13px}
+ .legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+ /* table */
+ .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+ .seg{display:inline-flex;padding:4px;border-radius:30px;background:var(--glass);border:1px solid var(--edge);flex-wrap:wrap}
+ .seg button{border:0;background:transparent;color:var(--muted);padding:9px 16px;border-radius:30px;cursor:pointer;font-size:14px;font-weight:600;transition:.25s}
+ .seg button.on{background:linear-gradient(90deg,var(--saf),var(--grn));color:#0a0f1c}
+ .search{flex:1;min-width:180px;padding:11px 18px;border-radius:30px;border:1px solid var(--edge);background:var(--glass);color:var(--text);font-size:14px;outline:none}
+ .search:focus{border-color:var(--saf)}
+ .tbl{width:100%;border-collapse:collapse;font-size:14px}
+ .tbl th{color:var(--muted);text-align:left;font-weight:600;padding:10px 8px;cursor:pointer;user-select:none;border-bottom:1px solid var(--edge);white-space:nowrap}
+ .tbl th:hover{color:#fff}
+ .tbl td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.05)}
+ .tbl tr:hover td{background:rgba(255,255,255,.04)}
+ .gcell{display:flex;align-items:center;gap:8px;min-width:150px}
+ .gbar{flex:1;height:7px;border-radius:5px;background:rgba(255,255,255,.07);overflow:hidden}
+ .gbar i{display:block;height:100%;border-radius:5px}
+ .gtxt{width:56px;text-align:right;font-weight:700}
+ .tscroll{overflow:auto}
+ /* check */
+ .check{padding:26px 28px}
+ .check h3{margin:0 0 12px;font-size:20px}
+ .check li{margin-bottom:10px;list-style:none;padding-left:30px;position:relative}
+ .check li::before{content:"\2713";position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:rgba(34,197,94,.18);color:var(--grn);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+ .check ul{padding:0;margin:0}
+ .say{display:flex;gap:16px;padding:22px 24px;align-items:flex-start}
+ .say .qn{flex:none;width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#0a0f1c;background:linear-gradient(135deg,var(--saf),var(--grn))}
+ .say b{display:block;margin-bottom:6px;font-size:16px}
+ .say p{margin:0;color:var(--muted);font-size:15px}
+ .panel{padding:26px 28px}
+ .panel h3{margin:0 0 12px;font-size:20px}
+ .panel li{margin-bottom:10px}
+ .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;counter-reset:s}
+ .step{padding:24px;counter-increment:s}
+ .step::before{content:counter(s);display:flex;width:38px;height:38px;border-radius:12px;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px;background:linear-gradient(135deg,var(--saf),var(--grn));color:#0a0f1c}
+ .step b{display:block;margin-bottom:4px}
+ .step span{color:var(--muted);font-size:14px}
+ footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:13px;position:relative;z-index:2}
+ @media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.bento{grid-template-columns:repeat(2,1fr)}.t-main{grid-column:span 2;grid-row:auto}.heat{grid-template-columns:repeat(6,1fr)}}
+ @media(max-width:520px){.two{grid-template-columns:1fr}.bento{grid-template-columns:1fr}.t-main{grid-column:auto}.heat{grid-template-columns:repeat(3,1fr)}}
+ @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.bars i{height:var(--h)}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div class="aurora"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="grid-bg"></div>
+<div class="glow" id="glow"></div>
+
+<nav id="nav">
+ <a href="#top" class="on">Overview</a><a href="#numbers">Numbers</a><a href="#charts">Charts</a><a href="#months">Months</a><a href="#data">Data check</a><a href="#explain">Explain</a><a href="#findings">Findings</a>
+</nav>
+
+<header class="hero" id="top">
+ <div class="wrap">
+  <div>
+   <div class="pill"><span class="dot"></span> Data project &middot; India &middot; amounts in &#8377;</div>
+   <h1>GST <span>Collections</span> Full Year</h1>
+   <p class="sub">India's GST collection for every month of FY 2025-26 (April 2025 to March 2026), compared with the same month a year before.</p>
+   <a class="btn p" href="#numbers">See the numbers</a>
+   <a class="btn g" href="#explain">Explain it simply</a>
+   <div style="color:var(--muted);font-size:13px;margin-top:6px">Built by Akshat Rastogi &middot; Official GST data &middot; SQL &middot; Dashboard</div>
+  </div>
+  <div class="glass hero-card" data-tilt>
+   <small>Gross GST collected, FY 2025-26</small>
+   <div class="big" data-to="22.27" data-dec="2" data-prefix="&#8377;" data-suffix=" L Cr">0</div>
+   <span class="chip">+8.3% vs FY 2024-25</span>
+   <div class="bars" id="heroBars"></div>
+   <small style="display:block;margin-top:10px">Each bar is one month, April to March</small>
+  </div>
+ </div>
+ <div class="scrollcue">SCROLL</div>
+</header>
+
+<section id="numbers">
+ <div class="wrap">
+  <div class="reveal"><div class="eyebrow">At a glance</div><h2>The year in numbers</h2><p class="lead">Gross GST means CGST + SGST + IGST, without cess. 1 lakh crore = 1,00,000 crore.</p></div>
+  <div class="bento">
+   <div class="glass tile t-main reveal" data-tilt>
+    <div><small>Gross GST collected in FY 2025-26</small><b class="n" data-to="2227096" data-prefix="&#8377;" data-suffix=" Cr">0</b><span class="chip">+8.3%</span> <small style="display:inline">from &#8377;20,55,515 Cr</small></div>
+    <div class="mini" id="mini"></div>
+   </div>
+   <div class="glass tile reveal" data-tilt><small>Biggest month</small><b class="n saf" data-to="223265" data-prefix="&#8377;" data-suffix=" Cr">0</b><small>April 2025</small></div>
+   <div class="glass tile reveal" data-tilt><small>Fastest growth</small><b class="n up" data-to="17.3" data-dec="1" data-prefix="+" data-suffix="%">0</b><small>May 2025 vs May 2024</small></div>
+   <div class="glass tile reveal" data-tilt><small>Slowest growth</small><b class="n dn" data-to="0.7" data-dec="1" data-prefix="+" data-suffix="%">0</b><small>November 2025 vs November 2024</small></div>
+   <div class="glass tile reveal" data-tilt>
+    <small>Import share of full-year GST</small>
+    <svg class="ring" viewBox="0 0 130 130" style="--off:239.4">
+     <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9933"/><stop offset="1" stop-color="#22c55e"/></linearGradient></defs>
+     <circle class="bg" cx="65" cy="65" r="52"/><circle class="fg" cx="65" cy="65" r="52"/>
+     <text x="65" y="65">26.7%</text>
+    </svg>
+    <small style="text-align:center">up from 25.4% last year</small>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="charts">
+ <div class="wrap">
+  <div class="reveal"><div class="eyebrow">Charts</div><h2>Month by month</h2><p class="lead">Amounts in &#8377; crore. Hover over a bar or a point to see the exact number.</p></div>
+  <div class="two">
+   <div class="glass box reveal"><h3>Gross GST by month: FY 2024-25 vs FY 2025-26</h3><canvas id="c1"></canvas></div>
+   <div class="glass box reveal"><h3>Growth compared with the same month last year (%)</h3><canvas id="c2"></canvas></div>
+   <div class="glass box reveal"><h3>Quarter by quarter (&#8377; crore)</h3><canvas id="c3"></canvas></div>
+   <div class="glass box reveal"><h3>Running total through the year (&#8377; crore)</h3><canvas id="c4"></canvas></div>
+  </div>
+  <div class="two" style="margin-top:18px">
+   <div class="glass box reveal"><h3>Where the GST comes from, full year (outer ring FY 2025-26, inner ring FY 2024-25)</h3><canvas id="c5"></canvas></div>
+   <div class="glass box reveal" style="display:flex;flex-direction:column;justify-content:center;gap:18px">
+    <div><small style="color:var(--muted)">GST on imports, full-year growth</small><div class="big" style="font-size:52px" data-to="14.1" data-dec="1" data-prefix="+" data-suffix="%">0</div></div>
+    <div><small style="color:var(--muted)">GST from sales inside India, full-year growth</small><div class="big" style="font-size:52px;background:linear-gradient(90deg,#4aa3ff,#b5d8ff);-webkit-background-clip:text;background-clip:text" data-to="6.4" data-dec="1" data-prefix="+" data-suffix="%">0</div></div>
+    <small style="color:var(--muted)">Imports grew more than twice as fast as domestic GST.</small>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="months">
+ <div class="wrap">
+  <div class="reveal"><div class="eyebrow">Growth heat strip</div><h2>Which months were strong?</h2><p class="lead">Every month's growth compared with the same month last year. Green is strong, orange is slow, red is very slow.</p></div>
+  <div class="heat reveal" id="heat"></div>
+  <div class="legend reveal"><span><i style="background:#22c55e"></i>10% or more</span><span><i style="background:#84cc16"></i>7% to 10%</span><span><i style="background:#ff9933"></i>3% to 7%</span><span><i style="background:#ef4444"></i>below 3%</span></div>
+
+  <div class="reveal" style="margin-top:56px"><h2 style="font-size:clamp(22px,3.4vw,32px)">Month explorer</h2><p class="lead">Filter the months, search by name, or click a column name to sort.</p></div>
+  <div class="toolbar reveal">
+   <div class="seg" id="seg"><button class="on" data-f="all">All months</button><button data-f="low">Growth below 7%</button><button data-f="high">Growth above 10%</button></div>
+   <input class="search" id="q" type="search" placeholder="Search a month...">
+  </div>
+  <div class="glass box tscroll reveal">
+   <table class="tbl"><thead><tr>
+    <th data-k="i">Month</th><th data-k="a">FY 2024-25</th><th data-k="b">FY 2025-26</th><th data-k="g">Growth</th>
+   </tr></thead><tbody id="tb"></tbody></table>
+  </div>
+ </div>
+</section>
+
+<section id="data">
+ <div class="wrap">
+  <div class="reveal"><div class="eyebrow">Is the data correct?</div><h2>How I checked the data</h2><p class="lead">Every number comes from the official GST monthly releases. I also checked that my months add up to the official totals.</p></div>
+  <div class="two">
+   <div class="glass check reveal">
+    <h3>Checks I did</h3>
+    <ul>
+     <li>The 12 months of FY 2025-26 add up to <b>&#8377;22,27,096 crore</b>. The official full-year total is the same.</li>
+     <li>The 12 months of FY 2024-25 add up to &#8377;20,55,516 crore. The official total is &#8377;20,55,515 crore. The &#8377;1 crore gap is rounding.</li>
+     <li>April to December and April to February running totals also match the official cumulative numbers.</li>
+     <li>For each month, the last-year number comes from the same release as this year's number, so the two are compared fairly.</li>
+    </ul>
+   </div>
+   <div class="glass check reveal">
+    <h3>Good to know</h3>
+    <ul>
+     <li>Gross GST here is CGST + SGST + IGST. Cess is left out, so both years follow the same rule.</li>
+     <li>News reports in 2025 included cess, so their numbers look bigger. For example, April 2025 was first reported as &#8377;2,36,716 crore, and without cess it is &#8377;2,23,265 crore.</li>
+     <li>Official numbers are provisional and can differ by about &#8377;1 crore because of rounding.</li>
+     <li>Full-year domestic GST is total GST minus imports.</li>
+    </ul>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="explain">
+ <div class="wrap">
+  <div class="reveal"><div class="eyebrow">In simple words</div><h2>How I explain this project</h2><p class="lead">Short answers you can say out loud, in simple words.</p></div>
+  <div class="two" id="sayGrid"></div>
+ </div>
+</section>
+
+<section id="findings">
+ <div class="wrap">
+  <div class="reveal"><div class="eyebrow">Result</div><h2>What I found and suggest</h2></div>
+  <div class="two" style="margin-top:26px">
+   <div class="glass panel reveal">
+    <h3>What I found</h3>
+    <ul>
+     <li>GST grew about 8.3% over the full year, to &#8377;22,27,096 crore.</li>
+     <li>April is the biggest month in both years, at &#8377;2,23,265 crore in April 2025.</li>
+     <li>Growth was uneven: May grew 17.3%, but November only 0.7%.</li>
+     <li>April to June grew the most (12.4%). October to December grew the least (4.8%).</li>
+     <li>Imports grew 14.1% and domestic GST grew 6.4%. Imports are now 26.7% of the total.</li>
+    </ul>
+   </div>
+   <div class="glass panel reveal">
+    <h3>What I would suggest</h3>
+    <ol>
+     <li>Plan for April every year, because it is the peak month.</li>
+     <li>Look into why growth slowed in October to December, after the GST rate cut in late September 2025.</li>
+     <li>Track imports separately, because they grow faster than domestic GST.</li>
+    </ol>
+   </div>
+  </div>
+  <div class="steps" style="margin-top:40px">
+   <div class="glass step reveal"><b>Collected the data</b><span>All 12 months from the official GST releases, with last year's matching month.</span></div>
+   <div class="glass step reveal"><b>Checked it</b><span>Made sure the months add up to the official full-year totals.</span></div>
+   <div class="glass step reveal"><b>Asked questions with SQL</b><span>Growth by month and quarter, best and worst months, domestic vs imports.</span></div>
+   <div class="glass step reveal"><b>Built this dashboard</b><span>Charts, a month explorer, my findings and three suggestions.</span></div>
+  </div>
+  <div class="reveal" style="margin-top:40px;text-align:center">
+   <a class="btn p" href="https://github.com/AkshatRastogi-Analyst/gst-collections-analysis" target="_blank" rel="noopener">GitHub Repository</a>
+   <a class="btn g" href="https://github.com/AkshatRastogi-Analyst/gst-collections-analysis/blob/main/gst_analysis.sql" target="_blank" rel="noopener">SQL Queries</a>
+  </div>
+ </div>
+</section>
+
+<footer>Source: official GST revenue releases (Ministry of Finance / GST Network). Gross GST = CGST + SGST + IGST. Percentages are my own calculations. &copy; Akshat Rastogi</footer>
+
+<script>
+/* ---------- data (Rs crore) ---------- */
+var MONTHS=['April','May','June','July','August','September','October','November','December','January','February','March'];
+var SHORT=['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'];
+var A=[197007,160455,160653,169122,162894,161299,174796,169016,164556,182094,169779,183845];
+var B=[223265,188172,171106,183065,174116,177365,188124,170276,174550,193384,183609,200064];
+var ROWS=MONTHS.map(function(m,i){ return {i:i,n:m,s:SHORT[i],a:A[i],b:B[i],g:(B[i]-A[i])*100/A[i]}; });
+function fmt(n){ return Number(n).toLocaleString('en-IN'); }
+function sum(arr,from,to){ var t=0; for(var i=from;i<to;i++) t+=arr[i]; return t; }
+
+/* ---------- simple explanation cards ---------- */
+var SAY=[
+ ['What is this project?','I looked at India\u2019s GST collection for a full year, April 2025 to March 2026, and compared every month with the same month a year before.'],
+ ['What is gross GST?','Gross GST is all the GST collected before any refunds. I added CGST, SGST and IGST and left out cess, so both years follow the same rule.'],
+ ['How much did GST grow in the year?','GST collected in FY 2025-26 was \u20B922,27,096 crore, against \u20B920,55,515 crore the year before. So it grew about 8.3%.'],
+ ['How did you work out growth?','I took the new number minus the old number, multiplied by 100, and divided by the old number. For April: (2,23,265 \u2212 1,97,007) \u00D7 100 \u00F7 1,97,007 = 13.3%.'],
+ ['Which months were the best and the weakest?','April was the biggest month in both years, with \u20B92,23,265 crore in April 2025. May grew the fastest at 17.3%, and November the slowest at 0.7%.'],
+ ['Why was November so weak?','In November 2025, GST from sales inside India fell 2.3% while GST on imports rose 10.2%, as the official release shows. GST rates were also cut in late September 2025, which may be one reason, but this data alone cannot prove it.'],
+ ['Which quarter did best?','April to June grew 12.4%, the most. October to December grew only 4.8%, the least.'],
+ ['Did domestic sales or imports grow faster?','Over the full year imports grew 14.1% and domestic GST grew 6.4%. Imports went from about 25.4% to 26.7% of the total.'],
+ ['What are the limits of your project?','I used only total GST, not state-wise or product-wise numbers. The official numbers are provisional and can differ by about \u20B91 crore because of rounding.']
+];
+(function(){
+  var g=document.getElementById('sayGrid'), h='';
+  SAY.forEach(function(x,i){
+    h+='<div class="glass say reveal"><div class="qn">'+(i+1)+'</div><div><b>'+x[0]+'</b><p>'+x[1]+'</p></div></div>';
+  });
+  g.innerHTML=h;
+})();
+
+/* ---------- hero + mini bars ---------- */
+(function(){
+  var max=Math.max.apply(null,B), hb=document.getElementById('heroBars'), mi=document.getElementById('mini');
+  B.forEach(function(v,i){
+    var h=Math.round(v/max*100);
+    var a=document.createElement('i'); a.style.setProperty('--h',h+'%'); a.style.animationDelay=(0.08*i)+'s'; hb.appendChild(a);
+    var b=document.createElement('i'); b.style.setProperty('--h',Math.round(h*0.62)+'px'); b.style.transitionDelay=(0.06*i)+'s'; mi.appendChild(b);
+  });
+})();
+
+/* ---------- heat strip ---------- */
+(function(){
+  var el=document.getElementById('heat'), h='';
+  ROWS.forEach(function(r){
+    var c=r.g>=10?'#22c55e':(r.g>=7?'#84cc16':(r.g>=3?'#ff9933':'#ef4444'));
+    h+='<div class="cell" style="background:'+c+'33;border-color:'+c+'88" title="'+r.n+': \u20B9'+fmt(r.a)+' Cr to \u20B9'+fmt(r.b)+' Cr">'+
+       '<b style="color:'+c+'">+'+r.g.toFixed(1)+'%</b><small>'+r.s+'</small></div>';
+  });
+  el.innerHTML=h;
+})();
+
+/* ---------- reveal, count-up, scroll bar, nav ---------- */
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+function countUp(el){
+  var to=parseFloat(el.dataset.to), dec=parseInt(el.dataset.dec||'0',10);
+  var pre=el.dataset.prefix||'', suf=el.dataset.suffix||'', t0=null, dur=1700;
+  function frame(t){
+    if(!t0) t0=t;
+    var p=Math.min((t-t0)/dur,1), v=to*(1-Math.pow(1-p,3));
+    el.innerHTML=pre+v.toLocaleString('en-IN',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;
+    if(p<1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+var io2=new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ countUp(e.target); io2.unobserve(e.target); } });
+},{threshold:0.5});
+document.querySelectorAll('[data-to]').forEach(function(el){ io2.observe(el); });
+
+var bar=document.getElementById('bar');
+window.addEventListener('scroll',function(){
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  bar.style.width=(h>0?window.scrollY/h*100:0)+'%';
+},{passive:true});
+var links=document.querySelectorAll('#nav a');
+var io4=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){ links.forEach(function(a){ a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id); }); }
+  });
+},{rootMargin:'-45% 0px -50% 0px'});
+['top','numbers','charts','months','data','explain','findings'].forEach(function(id){ io4.observe(document.getElementById(id)); });
+
+/* ---------- cursor glow + card tilt (mouse only) ---------- */
+if(window.matchMedia('(hover:hover)').matches){
+  var glow=document.getElementById('glow');
+  window.addEventListener('pointermove',function(e){ glow.style.opacity='1'; glow.style.left=e.clientX+'px'; glow.style.top=e.clientY+'px'; });
+  document.querySelectorAll('[data-tilt]').forEach(function(c){
+    c.addEventListener('pointermove',function(e){
+      var r=c.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      c.style.transform='perspective(900px) rotateX('+(-y*6)+'deg) rotateY('+(x*6)+'deg) translateY(-4px)';
+    });
+    c.addEventListener('pointerleave',function(){ c.style.transform=''; });
+  });
+}
+
+/* ---------- charts ---------- */
+Chart.defaults.color='#8f9bc4';
+Chart.defaults.borderColor='rgba(255,255,255,.07)';
+Chart.defaults.font.family='"Segoe UI",system-ui,Arial,sans-serif';
+var anim={duration:1700,easing:'easeOutQuart'};
+function grad(c1,c2){
+  return function(ctx){
+    var ch=ctx.chart, a=ch.chartArea;
+    if(!a) return c1;
+    var g=ch.ctx.createLinearGradient(0,a.bottom,0,a.top);
+    g.addColorStop(0,c2); g.addColorStop(1,c1); return g;
+  };
+}
+var tip={callbacks:{label:function(c){ return ' '+(c.dataset.label?c.dataset.label+': ':'')+'\u20B9'+fmt(c.parsed.y)+' Cr'; }}};
+var yfmt={ticks:{callback:function(v){return fmt(v);}}};
+
+var makers={
+ c1:function(el){ new Chart(el,{type:'bar',data:{labels:SHORT,datasets:[
+   {label:'FY 2024-25',data:A,backgroundColor:grad('#4aa3ff','rgba(74,163,255,.15)'),borderRadius:8},
+   {label:'FY 2025-26',data:B,backgroundColor:grad('#ff9933','rgba(255,153,51,.15)'),borderRadius:8}]},
+   options:{animation:anim,plugins:{tooltip:tip},scales:{y:{min:100000,ticks:yfmt.ticks}}}}); },
+ c2:function(el){ new Chart(el,{type:'bar',data:{labels:SHORT,datasets:[{data:ROWS.map(function(r){return +r.g.toFixed(1);}),
+   backgroundColor:ROWS.map(function(r){return r.g>=10?'#22c55e':(r.g>=7?'#84cc16':(r.g>=3?'#ff9933':'#ef4444'));}),borderRadius:8}]},
+   options:{animation:anim,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' +'+c.parsed.y+'%';}}}}}}); },
+ c3:function(el){
+   var q25=[],q26=[]; for(var q=0;q<4;q++){ q25.push(sum(A,q*3,q*3+3)); q26.push(sum(B,q*3,q*3+3)); }
+   new Chart(el,{type:'bar',data:{labels:['Apr-Jun','Jul-Sep','Oct-Dec','Jan-Mar'],datasets:[
+   {label:'FY 2024-25',data:q25,backgroundColor:grad('#4aa3ff','rgba(74,163,255,.15)'),borderRadius:10},
+   {label:'FY 2025-26',data:q26,backgroundColor:grad('#22c55e','rgba(34,197,94,.15)'),borderRadius:10}]},
+   options:{animation:anim,plugins:{tooltip:{callbacks:{label:function(c){return ' '+c.dataset.label+': \u20B9'+fmt(c.parsed.y)+' Cr';},
+     afterBody:function(items){ var i=items[0].dataIndex; return 'Growth: +'+((q26[i]-q25[i])*100/q25[i]).toFixed(1)+'%'; }}}},
+     scales:{y:{min:400000,ticks:yfmt.ticks}}}}); },
+ c4:function(el){
+   var c25=[],c26=[],t1=0,t2=0; for(var i=0;i<12;i++){ t1+=A[i]; t2+=B[i]; c25.push(t1); c26.push(t2); }
+   new Chart(el,{type:'line',data:{labels:SHORT,datasets:[
+   {label:'FY 2024-25',data:c25,borderColor:'#4aa3ff',backgroundColor:'rgba(74,163,255,.12)',fill:true,tension:.3,pointRadius:3},
+   {label:'FY 2025-26',data:c26,borderColor:'#ff9933',backgroundColor:'rgba(255,153,51,.12)',fill:true,tension:.3,pointRadius:3}]},
+   options:{animation:anim,plugins:{tooltip:tip},scales:{y:{ticks:yfmt.ticks}}}}); },
+ c5:function(el){ new Chart(el,{type:'doughnut',data:{labels:['Domestic GST','GST on imports'],datasets:[
+   {label:'FY 2025-26',data:[1631769,595327],backgroundColor:['#4aa3ff','#ff9933'],borderWidth:0},
+   {label:'FY 2024-25',data:[1533805,521710],backgroundColor:['rgba(74,163,255,.45)','rgba(255,153,51,.45)'],borderWidth:0}]},
+   options:{animation:anim,cutout:'48%',plugins:{legend:{position:'bottom'},
+     tooltip:{callbacks:{label:function(c){ return ' '+c.dataset.label+' '+c.label+': \u20B9'+fmt(c.parsed)+' Cr'; }}}}}}); }
+};
+var io3=new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ makers[e.target.id](e.target); io3.unobserve(e.target); } });
+},{threshold:0.25});
+Object.keys(makers).forEach(function(id){ io3.observe(document.getElementById(id)); });
+
+/* ---------- month explorer ---------- */
+var sortKey='i', sortDir=1, term='', filt='all';
+function renderTable(){
+  var rows=ROWS.filter(function(r){
+    if(term && r.n.toLowerCase().indexOf(term)===-1) return false;
+    if(filt==='low' && !(r.g<7)) return false;
+    if(filt==='high' && !(r.g>10)) return false;
+    return true;
+  });
+  rows.sort(function(x,y){ var a=x[sortKey], b=y[sortKey]; return (a-b)*sortDir; });
+  var html='';
+  rows.forEach(function(r){
+    var c=r.g>=10?'#22c55e':(r.g>=7?'#84cc16':(r.g>=3?'#ff9933':'#ef4444')), w=Math.min(r.g*5,100);
+    html+='<tr><td>'+r.n+'</td><td>\u20B9'+fmt(r.a)+'</td><td>\u20B9'+fmt(r.b)+'</td>'+
+      '<td><div class="gcell"><div class="gbar"><i style="width:'+w+'%;background:'+c+'"></i></div><span class="gtxt" style="color:'+c+'">+'+r.g.toFixed(1)+'%</span></div></td></tr>';
+  });
+  if(!rows.length) html='<tr><td colspan="4" style="color:#8f9bc4">No month matches.</td></tr>';
+  document.getElementById('tb').innerHTML=html;
+}
+document.querySelectorAll('#seg button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('#seg button').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on'); filt=b.dataset.f; renderTable();
+  });
+});
+document.getElementById('q').addEventListener('input',function(e){ term=e.target.value.trim().toLowerCase(); renderTable(); });
+document.querySelectorAll('.tbl th').forEach(function(th){
+  th.addEventListener('click',function(){
+    var k=th.dataset.k;
+    if(sortKey===k) sortDir=-sortDir; else { sortKey=k; sortDir=(k==='i')?1:-1; }
+    renderTable();
+  });
+});
+renderTable();
+</script>
+</body>
+</html>
