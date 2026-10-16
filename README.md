@@ -1,7 +1,7 @@
 # GST Collections Analysis: Full Year FY 2025-26 (India)
 
-## Live Site Link
-Live Site - https://akshatrastogi-analyst.github.io/gst-collections-analysis/
+## Dashboard Link
+Dashboard Link - https://akshatrastogi-analyst.github.io/gst-collections-analysis/
 
 ## Business question
 How much GST did India collect in a full year, how did each month compare with the same month last year, and which part (domestic sales or imports) is growing faster?
